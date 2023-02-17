@@ -14,7 +14,7 @@ Once you have installed the scroll tracking code on your site, you can use it to
 To customize the scroll tracking, you can modify the scrollDepth array in the tag [Custom HTML] and find percentages array in initiateTracker() function below. This array contains the percentages of the page at which to send a scroll tracking event. For example, if you want to send a scroll tracking event when the user reaches 50% and 75% of the page, you can modify the scrollDepth array to be:
 
 ```Javascript
-var percentages = [25, 50, 75, 90];
+var percentages = [50, 75];
 ```
 
 ### - Customize the scroll Percentage
@@ -22,7 +22,7 @@ As it same, you can modify the custom event name.
 For example, if you want to set custom event name 'someting' you can modify:
 
 ```Javascript
-var eventName = 'custom_scroll_tracking';
+var eventName = 'something';
 ```
 
 ## Contributing
