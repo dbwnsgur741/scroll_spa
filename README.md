@@ -34,6 +34,9 @@ This code has been customized from code covered by the MIT License, and if you m
 Repository : https://github.com/Bounteous-Inc/scroll
 
 Copyright (c) 2017 LunaMetrics, LLC.
+
 Written by @notdanwilkerson
-Licensed under the MIT License
-For full license text, visit https://opensource.org/licenses/MIT
+
+Licensed under the MIT License For full license text, 
+
+visit https://opensource.org/licenses/MIT
