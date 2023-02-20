@@ -1,3 +1,16 @@
+/**
+ * 본 코드는 아래 MIT License를 적용되어 있는 코드를 커스텀하였으며,
+ * 해당 코드 수정 시 아래 라이센스 표기를 반드시 해줘야 합니다.
+ *
+ * Copyright(c) 2017 LunaMetrics, LLC.
+ * Written by @notdanwilkerson
+ * Licensed under the MIT License
+ * For full license text, visit https://opensource.org/licenses/MIT
+ * 
+ * 코드 오류나 수정 사항 있는 경우 아래 repo로 PR 남겨주시면 확인해보겠습니다.
+ * https://github.com/team-hurdlers/scroll_spa
+*/
+
   (function (window) {
     /**
      * @class

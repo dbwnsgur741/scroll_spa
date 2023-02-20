@@ -27,3 +27,13 @@ var eventName = 'something';
 
 ## Contributing
 If you find any bugs or issues with the scroll tracking code, please report them in the issues section of this repository. If you would like to contribute to the code, please fork the repository and submit a pull request.
+
+## LICENSE
+This code has been customized from code covered by the MIT License, and if you modify this code, you must include the license notice below.
+
+Repository : https://github.com/Bounteous-Inc/scroll
+
+Copyright (c) 2017 LunaMetrics, LLC.
+Written by @notdanwilkerson
+Licensed under the MIT License
+For full license text, visit https://opensource.org/licenses/MIT
