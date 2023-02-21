@@ -1,6 +1,6 @@
 {
     "exportFormatVersion": 2,
-    "exportTime": "2023-02-20 23:39:42",
+    "exportTime": "2023-02-21 00:43:23",
     "containerVersion": {
         "path": "accounts/6073023114/containers/102608777/versions/0",
         "accountId": "6073023114",
@@ -117,10 +117,9 @@
                         "value": "G-XXXXXXXX"
                     }
                 ],
-                "fingerprint": "1676522948700",
+                "fingerprint": "1676940166306",
                 "firingTriggerId": [
-                    "2147479573",
-                    "5"
+                    "4"
                 ],
                 "tagFiringOption": "ONCE_PER_EVENT",
                 "monitoringMetadata": {
@@ -232,7 +231,7 @@
                 "name": "History Source"
             }
         ],
-        "fingerprint": "1676936382713",
+        "fingerprint": "1676940203418",
         "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/6073023114/containers/102608777/versions/0?apiLink=version"
     }
 }
