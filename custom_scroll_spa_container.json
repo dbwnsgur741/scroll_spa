@@ -1,0 +1,237 @@
+{
+    "exportFormatVersion": 2,
+    "exportTime": "2023-02-21 00:43:23",
+    "containerVersion": {
+        "path": "accounts/6073023114/containers/102608777/versions/0",
+        "accountId": "6073023114",
+        "containerId": "102608777",
+        "containerVersionId": "0",
+        "container": {
+            "path": "accounts/6073023114/containers/102608777",
+            "accountId": "6073023114",
+            "containerId": "102608777",
+            "name": "test.co.kr",
+            "publicId": "GTM-PDBD3SL",
+            "usageContext": [
+                "WEB"
+            ],
+            "fingerprint": "1676522729023",
+            "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/6073023114/containers/102608777/workspaces?apiLink=container",
+            "features": {
+                "supportUserPermissions": true,
+                "supportEnvironments": true,
+                "supportWorkspaces": true,
+                "supportGtagConfigs": false,
+                "supportBuiltInVariables": true,
+                "supportClients": false,
+                "supportFolders": true,
+                "supportTags": true,
+                "supportTemplates": true,
+                "supportTriggers": true,
+                "supportVariables": true,
+                "supportVersions": true,
+                "supportZones": true
+            },
+            "tagIds": [
+                "GTM-PDBD3SL"
+            ]
+        },
+        "tag": [
+            {
+                "accountId": "6073023114",
+                "containerId": "102608777",
+                "tagId": "6",
+                "name": "HURDLERS - [맞춤 HTML] custom_scroll_tracking",
+                "type": "html",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "html",
+                        "value": "<script type=\"text/javascript\" id=\"gtm-scroll-tracking-for-spa\">\n/**\n * 본 코드는 아래 MIT License를 적용되어 있는 코드를 커스텀하였으며,\n * 해당 코드 수정 시 아래 라이센스 표기를 반드시 해줘야 합니다.\n *\n * Copyright(c) 2017 LunaMetrics, LLC.\n * Written by @notdanwilkerson\n * Licensed under the MIT License\n * For full license text, visit https://opensource.org/licenses/MIT\n * \n * 코드 오류나 수정 사항 있는 경우 아래 repo로 PR 남겨주시면 확인해보겠습니다.\n * https://github.com/team-hurdlers/scroll_spa\n*/\n  (function (window) {\n    /**\n     * @class\n     * @classdesc A class for tracking user scroll depth on a page.\n     *\n     * @private\n     * @param {object} _config\n     * @param {Array} _tracked\n     * @param {string} _eventName\n     * @param {function} _tracking\n     * @param {boolean} _listenerAdded\n     */\n    function ScrollTracker() {\n      if (!(this instanceof ScrollTracker)) return new ScrollTracker();\n\n      this._config = {};\n      this._tracked = [];\n      this._eventName = '';\n      this._tracking = this._tracking.bind(this); // bind _tracking method to ScrollTracker instance\n      this._listenerAdded = false;\n    }\n\n    /**\n     * Method to track scroll depth and push an event to the data layer when certain scroll percentages are reached.\n     * @private\n     */\n    ScrollTracker.prototype._tracking = function () {\n      var _config = this._config;\n      var totalHeight = this._getTotalHeight();\n      var scrollPosition = this._getScrollPosition();\n      var percentScroll = this._getPercentScroll(totalHeight, scrollPosition);\n\n      var trackedPercentages = this._tracked;\n\n      // Loop through percentages array and track if not already tracked\n      for (var i = 0; i < _config.scroll_depth.length; i++) {\n        var percent = _config.scroll_depth[i];\n\n        if (percentScroll >= percent && trackedPercentages.indexOf(percent) === -1) {\n          console.log('customScrollTracker tracked : ', percent + '%');\n          trackedPercentages.push(percent);\n          setDataLayer(this._eventName, percent);\n        }\n      }\n    }\n\n    /**\n     * Method to start tracking scroll depth.\n     * @param {Object} config - Configuration for tracking scroll depth.\n     * @param {Array<number>} config.scroll_depth - Array of scroll percentages to track.\n     * @param {string} eventName - Name of the event to be pushed to the data layer.\n     */\n    ScrollTracker.prototype.on = function (config, eventName) {\n      this._config = config;\n      this._eventName = eventName;\n\n      if (!this._listenerAdded) {\n        window.addEventListener('scroll', this._tracking, {\n          passive: true\n        });\n        this._listenerAdded = true;\n      }\n    }\n\n    /**\n     * Method to stop tracking scroll depth.\n     */\n    ScrollTracker.prototype.remove = function () {\n      if (this._listenerAdded) {\n        window.removeEventListener('scroll', this._tracking, {\n          passive: true\n        });\n        this._listenerAdded = false;\n      }\n    }\n\n    /**\n     * Method to get the total height of the document.\n     * @private\n     * @returns {number} The total height of the document.\n     */\n\n    ScrollTracker.prototype._getTotalHeight = function () {\n      var body = document.body;\n      var html = document.documentElement;\n\n      var height = Math.max(\n        body.scrollHeight,\n        body.offsetHeight,\n        html.clientHeight,\n        html.scrollHeight,\n        html.offsetHeight\n      );\n\n      return height - window.innerHeight;\n    }\n\n    /**\n     * Method to get the current scroll position.\n     * @private\n     * @returns {number} The current scroll position.\n     */\n    ScrollTracker.prototype._getScrollPosition = function () {\n      return window.scrollY !== undefined ? window.scrollY : window.pageYOffset;\n    }\n\n    /**\n     * The _getPercentScroll method calculates the percentage of the document that has been scrolled.\n     * @private\n     * @param {number} totalHeight - The total height of the document.\n     * @param {number} scrollPosition - The current scroll position of the document.\n     * @returns {number} The percentage of the document that has been scrolled.\n     */\n    ScrollTracker.prototype._getPercentScroll = function (h, p) {\n      var scrollPercent = Math.round((p / h) * 100);\n\n      if (scrollPercent < 0) {\n        scrollPercent = 0;\n      } else if (scrollPercent > 100) {\n        scrollPercent = 100;\n      }\n\n      return scrollPercent;\n    }\n\n    /**\n     * The setDataLayer method sets the dataLayer variable with an event name and scroll depth percentage.\n     * @param {string} eventName - The event name to use for tracking.\n     * @param {number} percent - The scroll depth percentage to track.\n     */\n    function setDataLayer(e, p) {\n      window.dataLayer.push({\n        'event': e,\n        'scroll_depth': p\n      });\n    }\n\n    window.ScrollTracker = ScrollTracker;\n  })(this);\n\n  (function (window) {\n    initiateTracker();\n\n    function initiateTracker() {\n      var _customScrollTracker = window.customScrollTracker;\n      //custom you want track percetage number for gtm\n      var percentages = [25, 50, 75, 90];\n      //custom you want track custom event for gtm\n      var eventName = 'custom_scroll_tracking';\n\n      var config = {\n        scroll_depth: percentages\n      };\n\n      if (!_customScrollTracker) {\n        window.customScrollTracker = new ScrollTracker();\n        console.log('customScrollTracker initiated...');\n      } else {\n        window.customScrollTracker.remove();\n        window.customScrollTracker = null;\n        console.log('customScrollTracker deleted...');\n        window.customScrollTracker = new ScrollTracker();\n        console.log('customScrollTracker regenerated...');\n      }\n\n      window.customScrollTracker.on(config, eventName);\n    }\n  })(window);\n</script>"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "supportDocumentWrite",
+                        "value": "false"
+                    }
+                ],
+                "fingerprint": "1676936359197",
+                "firingTriggerId": [
+                    "2147479573",
+                    "5"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6073023114",
+                "containerId": "102608777",
+                "tagId": "7",
+                "name": "HURDLERS - [GA4/이벤트전송] custom_scroll_tracking",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "scroll"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventParameters",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "name",
+                                        "value": "scroll_depth"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "value",
+                                        "value": "{{HURDLERS - [변수] scroll_depth}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementId",
+                        "value": "none"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "G-XXXXXXXX"
+                    }
+                ],
+                "fingerprint": "1676940166306",
+                "firingTriggerId": [
+                    "4"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            }
+        ],
+        "trigger": [
+            {
+                "accountId": "6073023114",
+                "containerId": "102608777",
+                "triggerId": "4",
+                "name": "HURDLERS - [맞춤 이벤트] custom_scroll_tracking",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "custom_scroll_tracking"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1676522831252"
+            },
+            {
+                "accountId": "6073023114",
+                "containerId": "102608777",
+                "triggerId": "5",
+                "name": "HURDLERS - [기록 변경] 모든 페이지",
+                "type": "HISTORY_CHANGE",
+                "fingerprint": "1676522845710"
+            }
+        ],
+        "variable": [
+            {
+                "accountId": "6073023114",
+                "containerId": "102608777",
+                "variableId": "3",
+                "name": "HURDLERS - [변수] scroll_depth",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "scroll_depth"
+                    }
+                ],
+                "fingerprint": "1676522811853",
+                "formatValue": {}
+            }
+        ],
+        "builtInVariable": [
+            {
+                "accountId": "6073023114",
+                "containerId": "102608777",
+                "type": "PAGE_URL",
+                "name": "Page URL"
+            },
+            {
+                "accountId": "6073023114",
+                "containerId": "102608777",
+                "type": "PAGE_HOSTNAME",
+                "name": "Page Hostname"
+            },
+            {
+                "accountId": "6073023114",
+                "containerId": "102608777",
+                "type": "PAGE_PATH",
+                "name": "Page Path"
+            },
+            {
+                "accountId": "6073023114",
+                "containerId": "102608777",
+                "type": "REFERRER",
+                "name": "Referrer"
+            },
+            {
+                "accountId": "6073023114",
+                "containerId": "102608777",
+                "type": "EVENT",
+                "name": "Event"
+            },
+            {
+                "accountId": "6073023114",
+                "containerId": "102608777",
+                "type": "HISTORY_SOURCE",
+                "name": "History Source"
+            }
+        ],
+        "fingerprint": "1676940203418",
+        "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/6073023114/containers/102608777/versions/0?apiLink=version"
+    }
+}
